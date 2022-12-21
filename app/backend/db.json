@@ -1,0 +1,134 @@
+{
+    "products": [
+      {
+        "id": 5,
+        "name": "Watermelon",
+        "code": "104",
+        "price": "3",
+        "category": "Fruits",
+        "image": "https://cdn.pixabay.com/photo/2015/06/19/16/48/watermelon-815072_960_720.jpg"
+      },
+      {
+        "id": 1,
+        "name": "orange",
+        "code": "102",
+        "price": "2",
+        "category": "Fruits",
+        "image": "https://cdn.pixabay.com/photo/2017/01/20/15/06/oranges-1995056_960_720.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Milk",
+        "code": "205",
+        "price": "3",
+        "category": "Drinks",
+        "image": "https://p.turbosquid.com/ts-thumb/3Z/ndNatE/JX/image1/png/1615898033/600x600/fit_q87/994b3553c50795e3644e0a0b7079615b1e50510d/image1.jpg"
+      },
+      {
+        "id": 1667054846470.8484,
+        "name": "Coca Cola",
+        "code": "200",
+        "category": "Drinks",
+        "price": 1,
+        "image": " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXtVJlLP9OuQdOzvNndy2M1raRdczjlRClAA&usqp=CAU"
+      },
+      {
+        "id": 1667055023119.529,
+        "name": "Fanta",
+        "code": "208",
+        "price": "3",
+        "category": "Drinks",
+        "image": " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg_nmFuf4TD8ohyU3g-nk1HCHyv1duvKF7-9ZCGLcRYpNrz5kFY4j4j65IBzuaahuO4kI&usqp=CAU"
+      },
+      {
+        "id": 1667056505273.2356,
+        "name": "Apple",
+        "code": "100",
+        "price": 5,
+        "category": "Fruits",
+        "image": " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0ciidlRtImHipirMojavvH4Zjdh5YGJFWGx4FvSvWGYz98ZEygMB2y09nL7GC0lieBjA&usqp=CAU"
+      },
+      {
+        "id": 1667056708188.658,
+        "name": "Mango",
+        "code": "101",
+        "price": 5,
+        "category": "Fruits",
+        "image": " https://m.media-amazon.com/images/I/91PD3DRbUaL.jpg"
+      },
+      {
+        "id": 1667057051897.7063,
+        "name": "Orange Juice",
+        "code": "204",
+        "price": "3",
+        "category": "Drinks",
+        "image": " https://i5.walmartimages.com/asr/3b14704d-9256-4739-8bbc-6ff86854d35b.33de2a03934ae7441f9e227b5279946c.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
+      },
+      {
+        "id": 1667057209864.1624,
+        "name": "Lemon Mint",
+        "code": "206",
+        "category": "Drinks",
+        "price": 6,
+        "image": " https://alrawabidairy.com/wp-content/uploads-webpc/uploads/2021/01/SIZE-420x460-1500ml_Lemon-mint-front-420x460.png.webp"
+      },
+      {
+        "id": 1667057289696.6472,
+        "name": "Banana",
+        "code": "105",
+        "category": "Fruits",
+        "price": 6,
+        "image": " data:image/jpeg;base64,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"
+      },
+      {
+        "id": 1667057355312.463,
+        "name": "Peach",
+        "code": "106",
+        "category": "Fruits",
+        "price": 6,
+        "image": " https://post.healthline.com/wp-content/uploads/2020/08/peach-fruit-benefits-732x549-thumbnail-732x549.jpg"
+      },
+      {
+        "id": 1667102737824.4558,
+        "name": "Bread",
+        "code": "300",
+        "price": 5,
+        "category": "Bakery",
+        "image": " https://www.sammic.com/uploads/2021/Panaderia.jpg"
+      },
+      {
+        "id": 1667103162665.595,
+        "name": "Broccoli",
+        "code": "400",
+        "category": "Vegitabels",
+        "price": 8,
+        "image": " https://images.theconversation.com/files/467055/original/file-20220605-59095-c54dkr.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=754&h=534&fit=crop&dpr=1"
+      },
+      {
+        "id": 1667230729255.0513,
+        "name": "Tomato",
+        "code": "402",
+        "price": 3,
+        "category": "Vegitabels",
+        "image": " https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/1024px-Tomato_je.jpg"
+      }
+    ],
+    "category": [
+      {
+        "id": 1666972119294.7422,
+        "name": "Drinks"
+      },
+      {
+        "id": 1666972133107.8474,
+        "name": "Fruits"
+      },
+      {
+        "id": 1666972145932.6948,
+        "name": "Vegitabels"
+      },
+      {
+        "id": 1667315266824.2502,
+        "name": "Bakery"
+      }
+    ]
+  }
