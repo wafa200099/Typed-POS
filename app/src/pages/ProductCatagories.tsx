@@ -1,42 +1,30 @@
 
-import MainLayout from '../layouts/MainLayout'
-import axios from 'axios'
-import React, {
-  useEffect,
-  useState,
-  Fragment,
-  ChangeEvent,
-  MouseEvent,
-  FormEvent,
+import axios from 'axios';
+import {
+  ChangeEvent, FormEvent, Fragment, MouseEvent, useEffect,
+  useState
 } from "react";
-
-// import ModalDialog from '../component/ModalDialog'
+import MainLayout from '../layouts/MainLayout';
+import { Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ReadOnlyRowCat from '../component/ReadOnlyRowCat'
-import EditableRowCat from '../component/EditableRowCat'
-import SideNavBarLayout from '../layouts/SideNavBarLayout'
-import Pagination from '../component/Pagination'
-import Modal from "../component/Modal"
 import AddCategory from '../component/AddCategory';
-import { Button } from 'react-bootstrap'
+import EditableRowCat from '../component/EditableRowCat';
+import Modal from "../component/Modal";
+import Pagination from '../component/Pagination';
+import ReadOnlyRowCat from '../component/ReadOnlyRowCat';
+import SideNavBarLayout from '../layouts/SideNavBarLayout';
+import { categoriesProps,editCategoryFormDataProps } from '../Interfaces';
 
 
 
-interface categoriesProps{
-  id: null |number,
-  name: string, 
-}
-interface editFormDataProps{
-  name:string
-}
 
 function ProductCatagories() {
   const [categories, setCategories] = useState<categoriesProps[]>([])
   const [editCatagorieId, setEditCatagorieId] = useState<number | null>(null)
   const [search, setSearch] = useState<string>("");
   const [filteredCategories, setFilteredCategories] = useState<categoriesProps[]>([]);
-  const [editFormData, setEditFormData] = useState<editFormDataProps>({name:"" });
+  const [editFormData, setEditFormData] = useState<editCategoryFormDataProps>({name:"" });
 
   const toastOptions = {
     autoClose: 400,
@@ -156,7 +144,7 @@ function ProductCatagories() {
       </Button>
       {showModal ? (
         <Modal>
-          <div className='Mcontainer'>
+          <div className='Add-modal-container'>
             <AddCategory categories={categories} setCategories={setCategories} toggleShowModal={toggleShowModal} />
           </div>
 

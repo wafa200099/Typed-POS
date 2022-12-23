@@ -1,25 +1,24 @@
 body {
- margin:0;
- left: 0;
+  margin: 0;
+  left: 0;
 }
 .icon-bar {
-top: 77px;
-margin: 0;
-padding: 0;
-width: 70px;
-background-color: #F8F9FA;
-position: absolute;
-height: 100%;
-overflow: auto;
-left: 0;
-
+  top: 77px;
+  margin: 0;
+  padding: 0;
+  width: 70px;
+  background-color: #f8f9fa;
+  position: absolute;
+  height: 100%;
+  overflow: auto;
+  left: 0;
 }
 .icon-bar .navbar-brand {
   display: block;
   text-align: left;
   padding: 16px;
   transition: all 0.3s ease;
-  color: #0B5ED7;
+  color: #0b5ed7;
   font-size: 25px;
 }
 .icon-bar .navbar-brand:hover {

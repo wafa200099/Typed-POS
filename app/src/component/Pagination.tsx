@@ -1,13 +1,12 @@
-import React from 'react';
-import '../component/Pagination.css'
+import "../component/Pagination.css";
+
 const Pagination = ({
   productsPerPage,
   totalProducts,
   paginate,
   categoryPerPage,
-  totalCategories
+  totalCategories,
 }: any) => {
-
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
     pageNumbers.push(i);
@@ -18,13 +17,12 @@ const Pagination = ({
 
   return (
     <nav>
-      <ul className='pagination'>
-        {pageNumbers.map(number => (
-          <li key={number} className='page-item'>
-            <a onClick={() => paginate(number)} className='page-link'>
+      <ul className="pagination">
+        {pageNumbers.map((number) => (
+          <li key={number} className="page-item">
+            <a onClick={() => paginate(number)} className="page-link">
               {number}
             </a>
-
           </li>
         ))}
       </ul>
