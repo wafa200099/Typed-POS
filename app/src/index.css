@@ -57,7 +57,7 @@ td > input {
 
 #modal {
   color: rgb(255, 255, 255);
-  background-color: rgba(227, 37, 37, 0.9);
+  background-color: rgba(82, 77, 77, 0.9);
   position: fixed;
   float: left;
   left: 50%;
@@ -69,18 +69,19 @@ td > input {
   border-radius: 0.6rem;
   padding-top: 20px;
   padding-bottom: 10px;
-  height: 200px;
+
+
 }
 .Add-modal-container {
   margin: 50px;
-  padding: 5px;
+  padding: 15px;
+
 }
 
 .del-modal {
   margin: 20px;
   text-align: center;
   color: rgb(255, 255, 255);
-  background-color: aquamarine;
 }
 .forms {
   color: #fff;
