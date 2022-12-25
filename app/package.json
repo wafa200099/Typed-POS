@@ -26,7 +26,8 @@
     "react-to-print": "^2.14.10",
     "react-toastify": "^9.1.1",
     "typescript": "^4.9.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

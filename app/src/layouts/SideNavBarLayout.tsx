@@ -6,7 +6,7 @@ function SideNavBarLayout() {
     <div>
       <body>
         <div className="icon-bar shadow-sm">
-          <Link to="/" className="navbar-brand mb-3">
+          <Link to="/home" className="navbar-brand mb-3">
             <i className="fa fa-home"></i>
           </Link>
           <Link to="/pos" className="navbar-brand mb-3">

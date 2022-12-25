@@ -1,21 +1,26 @@
+import MainLayout from "../layouts/MainLayout";
 import axios from "axios";
-import {
-  ChangeEvent, FormEvent, Fragment, MouseEvent, useEffect,
-  useState
+import React, {
+  useEffect,
+  useState,
+  Fragment,
+  ChangeEvent,
+  MouseEvent,
+  FormEvent,
 } from "react";
-import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AddProduct from "../component/AddProduct";
-import EditableRow from "../component/EditableRow";
-import Modal from "../component/Modal";
-import Pagination from "../component/Pagination";
 import ReadOnlyRow from "../component/ReadOnlyRow";
-import {
-  categoriesProps, editProductFormDataProps, productProps
-} from "../Interfaces";
-import MainLayout from "../layouts/MainLayout";
+import EditableRow from "../component/EditableRow";
 import SideNavBarLayout from "../layouts/SideNavBarLayout";
+import Pagination from "../component/Pagination";
+import AddProduct from "../component/AddProduct";
+import Modal from "../component/Modal";
+import { Button } from "react-bootstrap";
+import {categoriesProps,productProps,editProductFormDataProps} from "../Interfaces"
+
+
+
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<productProps[]>([]);

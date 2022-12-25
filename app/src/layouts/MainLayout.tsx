@@ -10,7 +10,7 @@ function MainLayout({ children }: any) {
         <nav className="navbar navbar-expand-lg  bg-light shadow-sm  ">
           <div className="ml-2 w-50 m-3">
             <Link
-              to="/"
+              to="/home"
               className="navbar-brand  w-50 h1 text-primary text-uppercase"
             >
               <BsCart4 className="mb-2" />
