@@ -1,26 +1,27 @@
-import MainLayout from "../layouts/MainLayout";
 import axios from "axios";
-import React, {
+import {
+  ChangeEvent,
+  FormEvent,
+  Fragment,
+  MouseEvent,
   useEffect,
   useState,
-  Fragment,
-  ChangeEvent,
-  MouseEvent,
-  FormEvent,
 } from "react";
+import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ReadOnlyRow from "../component/ReadOnlyRow";
-import EditableRow from "../component/EditableRow";
-import SideNavBarLayout from "../layouts/SideNavBarLayout";
-import Pagination from "../component/Pagination";
 import AddProduct from "../component/AddProduct";
+import EditableRow from "../component/EditableRow";
 import Modal from "../component/Modal";
-import { Button } from "react-bootstrap";
-import {categoriesProps,productProps,editProductFormDataProps} from "../Interfaces"
-
-
-
+import Pagination from "../component/Pagination";
+import ReadOnlyRow from "../component/ReadOnlyRow";
+import {
+  categoriesProps,
+  editProductFormDataProps,
+  productProps,
+} from "../Interfaces";
+import MainLayout from "../layouts/MainLayout";
+import SideNavBarLayout from "../layouts/SideNavBarLayout";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<productProps[]>([]);
@@ -41,8 +42,14 @@ const ProductsPage = () => {
     pauseOnHover: true,
   };
 
+  const baseUrl: string = process.env.REACT_APP_BACKEND_PATH!;
+  const axiosInstance = axios.create({
+    baseURL: baseUrl,
+  });
+
   const fetchProducts = async () => {
-    const result = await axios.get("products");
+    const result = await axiosInstance.get("products");
+    console.log(result.data);
     setProducts(await result.data);
   };
 
@@ -51,7 +58,8 @@ const ProductsPage = () => {
   }, []);
 
   const fetchCatagories = async () => {
-    const result = await axios.get("category");
+    const result = await axiosInstance.get("category");
+    console.log(result.data);
     setCatagories(await result.data);
   };
 
@@ -65,9 +73,7 @@ const ProductsPage = () => {
       (product) => product.id === productId
     );
     newProducts.splice(deletedElementIndex, 1);
-    await fetch(`http://localhost:5000/products/${productId}`, {
-      method: "delete",
-    });
+    await axiosInstance.delete(`products/${productId}`);
     setProducts(newProducts);
     toast.error(`Product Removed Successfully`, toastOptions);
   };
@@ -118,13 +124,7 @@ const ProductsPage = () => {
     // index of row we are editing now
     const index = products.findIndex((product) => product.id === editProductId);
     newProducts[index] = editedProduct;
-    await fetch(`http://localhost:5000/products/${editProductId}`, {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify(editedProduct),
-    });
+    await axiosInstance.put(`products/${editProductId}`, { ...editedProduct });
     setProducts(newProducts);
     setEditProductId(null);
   };

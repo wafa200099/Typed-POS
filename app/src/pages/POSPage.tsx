@@ -22,9 +22,14 @@ const POSPage = () => {
     pauseOnHover: true,
   };
 
+  const baseUrl: string = process.env.REACT_APP_BACKEND_PATH!;
+  const axiosInstance = axios.create({
+    baseURL: baseUrl,
+  });
+
   const fetchProducts = async () => {
     setIsLoading(true);
-    const result = await axios.get("products");
+    const result = await axiosInstance.get("products");
     setProducts(await result.data);
     setData(await result.data);
     setIsLoading(false);

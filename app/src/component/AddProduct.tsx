@@ -1,8 +1,9 @@
+import axios from "axios";
+import { Field, Form, Formik } from "formik";
 import React, { FC } from "react";
-import { Formik, Field, Form } from "formik";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { productProps, categoriesProps } from "../Interfaces";
+import { categoriesProps, productProps } from "../Interfaces";
 interface Props {
   products: productProps[];
   setProducts: React.Dispatch<React.SetStateAction<productProps[]>>;
@@ -20,6 +21,11 @@ const AddProduct: FC<Props> = ({
     autoClose: 400,
     pauseOnHover: true,
   };
+  const baseUrl: string = process.env.REACT_APP_BACKEND_PATH!;
+  const axiosInstance = axios.create({
+    baseURL: baseUrl,
+  });
+
   return (
     <Formik
       initialValues={{
@@ -40,13 +46,7 @@ const AddProduct: FC<Props> = ({
         ) {
           toast.error("Please fill all input Feild");
         } else {
-          await fetch("http://localhost:5000/products", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify(values),
-          });
+          await axiosInstance.post("products", { ...values });
           products.push(values);
           setProducts([...products]);
           toast.success(` ${values.name}  added successfully`, toastOptions);

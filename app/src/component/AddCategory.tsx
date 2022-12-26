@@ -1,5 +1,6 @@
+import axios from "axios";
+import { Field, Form, Formik } from "formik";
 import React, { FC } from "react";
-import { Formik, Field, Form } from "formik";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { categoriesProps } from "../Interfaces";
@@ -18,6 +19,12 @@ const AddCategory: FC<Props> = ({
     autoClose: 400,
     pauseOnHover: true,
   };
+
+  const baseUrl: string = process.env.REACT_APP_BACKEND_PATH!;
+  const axiosInstance = axios.create({
+    baseURL: baseUrl,
+  });
+
   return (
     <Formik
       initialValues={{
@@ -26,15 +33,9 @@ const AddCategory: FC<Props> = ({
       }}
       onSubmit={async (values, { resetForm }) => {
         if (!values.name) {
-          toast.error("Please Fill Name Input Feild");
+          toast.error("Please Fill The Name Input Feild");
         } else {
-          await fetch("http://localhost:5000/category", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify(values),
-          });
+          await axiosInstance.post("category", { ...values });
           categories.push(values);
           setCategories([...categories]);
           toast.success(`${values.name} added successfully`, toastOptions);

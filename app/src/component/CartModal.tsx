@@ -24,7 +24,7 @@ const CartModal: FC<Props> = ({
   const [showModal, setShowModal] = useState(false);
   const [taxValue, setTaxValue] = useState(0);
   const [discountValue, setDiscountValue] = useState(0);
-  
+
   const toggleShowModal = () => {
     setShowModal(!showModal);
   };

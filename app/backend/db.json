@@ -110,7 +110,15 @@
       "code": "402",
       "price": 3,
       "category": "Vegitabels",
-      "image": " https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/1024px-Tomato_je.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/1024px-Tomato_je.jpg"
+    },
+    {
+      "id": 1672043799674.9731,
+      "name": "havana",
+      "code": "342",
+      "price": 44,
+      "category": "Fruits",
+      "image": "https://avatars.mds.yandex.net/i?id=84dbd50839c3d640ebfc0de20994c30d-4473719-images-taas-consumers&n=27&h=480&w=480"
     }
   ],
   "category": [
@@ -129,6 +137,10 @@
     {
       "id": 1667315266824.2502,
       "name": "Bakery"
+    },
+    {
+      "id": 1672049310292.3164,
+      "name": "lala"
     }
   ]
 }
