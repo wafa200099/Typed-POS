@@ -1,12 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FC } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LoginForm from "./component/LoginForm";
-import ErrorPage from "./pages/ErrorPage";
-import HomePage from "./pages/HomePage";
-import POSPage from "./pages/POSPage";
-import ProductCatagories from "./pages/ProductCatagories";
-import ProductsPage from "./pages/ProductsPage";
+import LoginForm from "./Components/LoginForm/LoginForm";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import HomePage from "./pages/HomePage/HomePage";
+import POSPage from "./pages/POSPage/POSPage";
+import ProductCatagories from "./pages/CatagoriesPage/CatagoriesPage";
+import ProductsPage from "./pages/ProductsPage/ProductsPage";
 
 const App: FC = () => {
   return (

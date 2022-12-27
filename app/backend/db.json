@@ -35,8 +35,8 @@
     {
       "id": 1667055023119.529,
       "name": "Fanta",
-      "code": "208",
-      "price": "3",
+      "code": "44",
+      "price": "34",
       "category": "Drinks",
       "image": " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg_nmFuf4TD8ohyU3g-nk1HCHyv1duvKF7-9ZCGLcRYpNrz5kFY4j4j65IBzuaahuO4kI&usqp=CAU"
     },
@@ -137,10 +137,6 @@
     {
       "id": 1667315266824.2502,
       "name": "Bakery"
-    },
-    {
-      "id": 1672049310292.3164,
-      "name": "lala"
     }
   ]
 }
