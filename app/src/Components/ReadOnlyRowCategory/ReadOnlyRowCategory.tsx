@@ -43,7 +43,7 @@ const ReadOnlyRowCategory: FC<Props> = ({
                 className="btn btn-primary p-1 m-1 mt-2 "
                 onClick={toggleShowModal}
               >
-                CANCEL
+                Cancle
               </button>
               <button
                 type="button"
@@ -54,7 +54,7 @@ const ReadOnlyRowCategory: FC<Props> = ({
                   }
                 }}
               >
-                DELETE
+                Delete
               </button>
             </div>
           </Modal>

@@ -1,1 +1,1 @@
-export { deleteCategoryApi,editCatagorieApi, getCategoryApi } from "./Category";
+export { deleteCategoryApi,editCatagorieApi, getCategoryApi,addCategoryApi } from "./Category";

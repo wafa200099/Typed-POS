@@ -57,7 +57,7 @@ td > input {
 
 #modal {
   color: rgb(255, 255, 255);
-  background-color: rgba(82, 77, 77, 0.9);
+  background-color: #6C757D;
   position: fixed;
   float: left;
   left: 50%;

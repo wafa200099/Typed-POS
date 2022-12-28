@@ -2,10 +2,9 @@ import {
   ChangeEvent,
   FC,
   FormEvent,
-  Fragment,
   MouseEvent,
   useEffect,
-  useState
+  useState,
 } from "react";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -13,16 +12,15 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   deleteCategoryApi,
   editCatagorieApi,
-  getCategoryApi
+  getCategoryApi,
 } from "../../API/Category";
-import AddCategory from "../../Components/AddCategory/AddCategory";
-import EditableRowCat from "../../Components/EditableRowCategory/EditableRowCategory";
-import Modal from "../../Components/Modal/Modal";
+import EditableRowCategory from "../../Components/EditableRowCategory/EditableRowCategory";
 import Pagination from "../../Components/Pagination/Pagination";
-import ReadOnlyRowCat from "../../Components/ReadOnlyRowCategory/ReadOnlyRowCategory";
+import ReadOnlyRowCategory from "../../Components/ReadOnlyRowCategory/ReadOnlyRowCategory";
 import { categoriesProps, editCategoryFormDataProps } from "../../Interfaces";
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import SideNavBarLayout from "../../layouts/SideNavBarLayout/SideNavBarLayout";
+import AddCategoryForm from "./components/AddCategoryForm";
 
 const CatagoriesPage: FC = () => {
   const [categories, setCategories] = useState<categoriesProps[]>([]);
@@ -31,9 +29,14 @@ const CatagoriesPage: FC = () => {
   const [filteredCategories, setFilteredCategories] = useState<
     categoriesProps[]
   >([]);
+  const [isAddCategoryFormOpen, setIsAddCategoryFormOpen] = useState(false);
   const [editFormData, setEditFormData] = useState<editCategoryFormDataProps>({
     name: "",
   });
+
+  const toggleAddCategoryForm = () => {
+    setIsAddCategoryFormOpen(!isAddCategoryFormOpen);
+  };
 
   const toastOptions = {
     autoClose: 400,
@@ -41,7 +44,7 @@ const CatagoriesPage: FC = () => {
   };
 
   const fetchCategories = async () => {
-    setCategories(await getCategoryApi());
+    await setCategories(await getCategoryApi());
   };
 
   useEffect(() => {
@@ -119,11 +122,6 @@ const CatagoriesPage: FC = () => {
     }
   }, [search, categories]);
 
-  const [showModal, setShowModal] = useState(false);
-  const toggleShowModal = () => {
-    setShowModal(!showModal);
-  };
-
   return (
     <MainLayout>
       <SideNavBarLayout />
@@ -142,20 +140,23 @@ const CatagoriesPage: FC = () => {
           <i className="fas fa-search"></i>
         </button>
       </div>
-      <Button variant="primary" onClick={toggleShowModal} className="mb-4">
+      <Button
+        variant="primary"
+        onClick={toggleAddCategoryForm}
+        className="mb-4"
+      >
         ADD CATEGORY
       </Button>
-      {showModal ? (
-        <Modal>
-          <div className="Add-modal-container">
-            <AddCategory
-              categories={categories}
-              setCategories={setCategories}
-              toggleShowModal={toggleShowModal}
-            />
-          </div>
-        </Modal>
-      ) : null}
+      <AddCategoryForm
+        isOpen={isAddCategoryFormOpen}
+        onClose={() => {
+          setIsAddCategoryFormOpen(false);
+        }}
+        onAdd={() => {
+          fetchCategories();
+          // setIsAddCategoryFormOpen(false)
+        }}
+      />
 
       <form onSubmit={handleEditFormSubmit}>
         <table className="table table-responsive table-sm border w-50 shadow bg-light">
@@ -171,23 +172,23 @@ const CatagoriesPage: FC = () => {
           </thead>
           <tbody>
             {currentCategories.map((category, key) => (
-              <Fragment>
+              <>
                 {editCatagorieId === category.id ? (
-                  <EditableRowCat
+                  <EditableRowCategory
                     key={key}
                     editFormData={editFormData}
                     handleEditFormChange={handleEditFormChange}
                     handleCancelClick={handleCancelClick}
                   />
                 ) : (
-                  <ReadOnlyRowCat
+                  <ReadOnlyRowCategory
                     category={category}
                     key={key}
                     deleteCategory={deleteCategory}
                     handleEditClick={handleEditClick}
                   />
                 )}
-              </Fragment>
+              </>
             ))}
           </tbody>
         </table>
