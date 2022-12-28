@@ -1,3 +1,1 @@
-import {deleteCategoryApi} from './Category'
-
-export default deleteCategoryApi;
+export { deleteCategoryApi,editCatagorieApi, getCategoryApi } from "./Category";

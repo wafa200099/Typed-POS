@@ -1,4 +1,5 @@
 
-export interface types{
-
+export interface editedcategoryTypes {
+    id: number | null;
+    name: string;
 }

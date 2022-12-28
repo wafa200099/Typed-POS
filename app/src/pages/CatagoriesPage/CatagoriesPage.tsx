@@ -1,16 +1,20 @@
 import {
   ChangeEvent,
+  FC,
   FormEvent,
   Fragment,
   MouseEvent,
   useEffect,
-  useState,
-  FC
+  useState
 } from "react";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axiosInstance from "../../API/httpClient";
+import {
+  deleteCategoryApi,
+  editCatagorieApi,
+  getCategoryApi
+} from "../../API/Category";
 import AddCategory from "../../Components/AddCategory/AddCategory";
 import EditableRowCat from "../../Components/EditableRowCategory/EditableRowCategory";
 import Modal from "../../Components/Modal/Modal";
@@ -19,9 +23,8 @@ import ReadOnlyRowCat from "../../Components/ReadOnlyRowCategory/ReadOnlyRowCate
 import { categoriesProps, editCategoryFormDataProps } from "../../Interfaces";
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import SideNavBarLayout from "../../layouts/SideNavBarLayout/SideNavBarLayout";
-import {deleteCategoryApi} from "../../API/Category/Category"
 
-const CatagoriesPage:FC=()=>{
+const CatagoriesPage: FC = () => {
   const [categories, setCategories] = useState<categoriesProps[]>([]);
   const [editCatagorieId, setEditCatagorieId] = useState<number | null>(null);
   const [search, setSearch] = useState<string>("");
@@ -38,9 +41,9 @@ const CatagoriesPage:FC=()=>{
   };
 
   const fetchCategories = async () => {
-    const result = await axiosInstance.get("category");
-    setCategories(await result.data);
+    setCategories(await getCategoryApi());
   };
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -51,7 +54,7 @@ const CatagoriesPage:FC=()=>{
       (category) => category.id === categoryId
     );
     newCatagories.splice(delelm, 1);
-    await deleteCategoryApi(categoryId)
+    await deleteCategoryApi(categoryId);
     setCategories(newCatagories);
     toast.error(`category Removed Successfully`, toastOptions);
   };
@@ -89,9 +92,7 @@ const CatagoriesPage:FC=()=>{
       (category) => category.id === editCatagorieId
     );
     newCatagories[index] = editedcategory;
-    await axiosInstance.put(`category/${editCatagorieId}`, {
-      ...editedcategory,
-    });
+    await editCatagorieApi(editCatagorieId!, editedcategory);
     setCategories(newCatagories);
     fetchCategories();
     setEditCatagorieId(null);
@@ -201,6 +202,6 @@ const CatagoriesPage:FC=()=>{
       </form>
     </MainLayout>
   );
-}
+};
 
 export default CatagoriesPage;
