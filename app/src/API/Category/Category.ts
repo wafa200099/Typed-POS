@@ -1,3 +1,4 @@
+import { categoriesProps } from "../../Interfaces";
 import axiosInstance from "../httpClient";
 import {editedcategoryTypes, addedcategoryTypes} from "./Types"
 
@@ -15,7 +16,7 @@ export const editCatagorieApi = (editCatagorieId: number,editedcategory:editedca
   
 
   export const getCategoryApi = async() => {
-    const responce =  await axiosInstance.get("category");
+    const responce =  await axiosInstance.get<categoriesProps[]>("category");
     const category=responce.data
     return category
     

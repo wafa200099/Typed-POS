@@ -18,26 +18,19 @@ interface Props {
 }
 
 const ReadOnlyRowCategory: FC<Props> = ({ category, key, handleEditClick }) => {
-  // const[isDeleteted,setIsDeleted]=useState(false)
   const queryClient = useQueryClient();
   const toastOptions = {
     autoClose: 400,
     pauseOnHover: true,
   };
 
-  const sleep = (ms: number) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-
   // const mutationKey= "deletecategory";
   const { mutate, isLoading } = useMutation(deleteCategoryApi);
 
-  const deleteCategory = async (categoryId: number) => {
+  const deleteCategory = (categoryId: number) => {
     mutate(categoryId, {
-      onSuccess: async () => {
-        await sleep(2000);
-        // setIsDeleted(true)
-        queryClient.invalidateQueries()
+      onSuccess: () => {
+        queryClient.invalidateQueries(["category"]);
         toast.error(`category Removed Successfully`, toastOptions);
       },
       onError: (response) => {
@@ -68,7 +61,7 @@ const ReadOnlyRowCategory: FC<Props> = ({ category, key, handleEditClick }) => {
               <button
                 className="btn btn-primary p-1 m-1 mt-2 "
                 onClick={toggleDeleteModal}
-                // disabled={isDeleteted}
+                disabled={isLoading}
               >
                 Cancle
               </button>

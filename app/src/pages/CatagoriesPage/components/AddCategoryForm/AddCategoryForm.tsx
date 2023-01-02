@@ -34,9 +34,10 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({
         toast.error("Please Fill The Name Input Feild");
       } else {
         mutate(values, {
-          onSuccess: async () => {
-            await sleep(1000);
+          onSuccess: () => {
+            sleep(1000);
             toast.success(`${values.name} added successfully`, toastOptions);
+            onAdd()
             resetForm();
           },
           onError: (response) => {
@@ -73,7 +74,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({
             <button
               type="submit"
               className=" btn btn-primary mt-3 m-2"
-              onClick={onAdd}
+           
             >
               {formik.isSubmitting ? (
                 <Spinner
