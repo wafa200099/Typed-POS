@@ -1,5 +1,5 @@
 import React from "react";
-import Banner from "../../Components/Banner/Banner";
+import Banner from "../../layouts/Banner/Banner";
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import SideNavBarLayout from "../../layouts/SideNavBarLayout/SideNavBarLayout";
 function HomePage() {

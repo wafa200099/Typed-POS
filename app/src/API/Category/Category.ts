@@ -1,8 +1,8 @@
 import axiosInstance from "../httpClient";
 import {editedcategoryTypes, addedcategoryTypes} from "./Types"
 
-export const deleteCategoryApi = (categoryId: number) => {
-  axiosInstance.delete(`category/${categoryId}`);
+export const deleteCategoryApi = async(categoryId: number) => {
+ await axiosInstance.delete(`category/${categoryId}`);
 };
 
 
@@ -15,8 +15,10 @@ export const editCatagorieApi = (editCatagorieId: number,editedcategory:editedca
   
 
   export const getCategoryApi = async() => {
-    const result =  await axiosInstance.get("category");
-    return  await result.data
+    const responce =  await axiosInstance.get("category");
+    const category=responce.data
+    return category
+    
 
   };
   

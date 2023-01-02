@@ -4,31 +4,36 @@ import {
   Fragment,
   MouseEvent,
   useEffect,
-  useState
+  useState,
 } from "react";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axiosInstance from "../../API/httpClient";
-import AddProduct from "../../Components/AddProduct/AddProduct";
+import { getCategoryApi } from "../../API/Category";
+import {
+  deleteProductApi,
+  editProductApi,
+  getProductApi,
+} from "../../API/Product";
 import EditableRow from "../../Components/Editable Row Product/EditableRowProduct";
-import Modal from "../../Components/Modal/Modal";
 import Pagination from "../../Components/Pagination/Pagination";
 import ReadOnlyRow from "../../Components/ReadOnlyRowProduct/ReadOnlyRowProduct";
 import {
   categoriesProps,
   editProductFormDataProps,
-  productProps
+  productProps,
 } from "../../Interfaces";
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import SideNavBarLayout from "../../layouts/SideNavBarLayout/SideNavBarLayout";
+import AddProductForm from "./components/AddProductForm";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<productProps[]>([]);
-  const [categories, setCatagories] = useState<categoriesProps[]>([]);
+  const [categories, setCategories] = useState<categoriesProps[]>([]);
   const [search, setSearch] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<productProps[]>([]);
   const [editProductId, setEditProductId] = useState<number | null>(null);
+  const [isAddProductFormOpen, setIsAddProductFormOpen] = useState(false);
   const [editFormData, setEditFormData] = useState<editProductFormDataProps>({
     name: "",
     code: "",
@@ -42,26 +47,20 @@ const ProductsPage = () => {
     pauseOnHover: true,
   };
 
-
-
   const fetchProducts = async () => {
-    const result = await axiosInstance.get("products");
-    console.log(result.data);
-    setProducts(await result.data);
+    setProducts(await getProductApi());
   };
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  const fetchCatagories = async () => {
-    const result = await axiosInstance.get("category");
-    console.log(result.data);
-    setCatagories(await result.data);
+  const fetchCategories = async () => {
+    setCategories(await getCategoryApi());
   };
 
   useEffect(() => {
-    fetchCatagories();
+    fetchCategories();
   }, []);
 
   const deleteProduct = async (productId: number) => {
@@ -70,7 +69,7 @@ const ProductsPage = () => {
       (product) => product.id === productId
     );
     newProducts.splice(deletedElementIndex, 1);
-    await axiosInstance.delete(`products/${productId}`);
+    deleteProductApi(productId);
     setProducts(newProducts);
     toast.error(`Product Removed Successfully`, toastOptions);
   };
@@ -121,7 +120,7 @@ const ProductsPage = () => {
     // index of row we are editing now
     const index = products.findIndex((product) => product.id === editProductId);
     newProducts[index] = editedProduct;
-    await axiosInstance.put(`products/${editProductId}`, { ...editedProduct });
+    editProductApi(editProductId!, editedProduct);
     setProducts(newProducts);
     setEditProductId(null);
   };
@@ -145,9 +144,8 @@ const ProductsPage = () => {
   );
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const toggleShowModal = () => {
-    setShowModal(!showModal);
+  const toggleAddProductForm = () => {
+    setIsAddProductFormOpen(!isAddProductFormOpen);
   };
   return (
     <MainLayout>
@@ -168,21 +166,24 @@ const ProductsPage = () => {
             <i className="fas fa-search"></i>
           </button>
         </div>
-        <Button variant="primary" onClick={toggleShowModal} className="mb-4">
+        <Button
+          variant="primary"
+          onClick={toggleAddProductForm}
+          className="mb-4"
+        >
           ADD PRODUCT
         </Button>
-        {showModal ? (
-          <Modal>
-            <div className="Add-modal-container">
-              <AddProduct
-                categories={categories}
-                products={products}
-                setProducts={setProducts}
-                toggleShowModal={toggleShowModal}
-              />
-            </div>
-          </Modal>
-        ) : null}
+        <AddProductForm
+          isOpen={isAddProductFormOpen}
+          onClose={() => {
+            setIsAddProductFormOpen(false);
+          }}
+          onAdd={() => {
+            fetchCategories();
+          }}
+          categories={categories}
+        />
+
         <form onSubmit={handleEditFormSubmit}>
           <table className="table table-responsive table-sm border shadow bg-light">
             <thead>

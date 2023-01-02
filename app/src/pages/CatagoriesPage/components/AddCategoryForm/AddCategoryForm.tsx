@@ -1,54 +1,49 @@
+import { useMutation } from "@tanstack/react-query";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import { FC } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import { addCategoryApi } from "../../../../API/Category";
-import Modal from "../../../../Components/Modal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useMutation } from "@tanstack/react-query";
+import { addCategoryApi } from "../../../../API/Category";
+import Modal from "../../../../Components/Modal";
+import { AddCategoryFormProps } from "./types";
 
 const toastOptions = {
   autoClose: 400,
   pauseOnHover: true,
 };
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  onAdd: () => void;
-}
-
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const useAddMutation = () => {
-  return useMutation(addCategoryApi);
-};
-
-const AddCategoryForm: FC<Props> = ({ isOpen, onClose, onAdd }) => {
-  // const {isLoading,isError,mutate,error} =
-  const { mutate, isLoading } = useAddMutation();
+const AddCategoryForm: FC<AddCategoryFormProps> = ({
+  isOpen,
+  onClose,
+  onAdd,
+}) => {
+  const { mutate } = useMutation(addCategoryApi);
 
   const formik = useFormik({
     initialValues: {
       id: 0,
       name: "",
     },
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: (values, { resetForm }) => {
       if (!values.name) {
         toast.error("Please Fill The Name Input Feild");
       } else {
-        await mutate(values, {
-          onSuccess: () => {
+        mutate(values, {
+          onSuccess: async () => {
+            await sleep(1000);
             toast.success(`${values.name} added successfully`, toastOptions);
+            resetForm();
           },
           onError: (response) => {
             toast.error("An error occured while submiting the form");
             console.log(response);
           },
         });
-        resetForm();
       }
     },
   });
@@ -80,7 +75,7 @@ const AddCategoryForm: FC<Props> = ({ isOpen, onClose, onAdd }) => {
               className=" btn btn-primary mt-3 m-2"
               onClick={onAdd}
             >
-              {isLoading ? (
+              {formik.isSubmitting ? (
                 <Spinner
                   as="span"
                   animation="border"

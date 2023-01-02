@@ -1,19 +1,18 @@
+import {
+  QueryClient,
+  QueryClientProvider
+} from "@tanstack/react-query";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FC } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginForm from "./Components/LoginForm/LoginForm";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import HomePage from "./pages/HomePage/HomePage";
-import POSPage from "./pages/POSPage/POSPage";
 import ProductCatagories from "./pages/CatagoriesPage/CatagoriesPage";
-import ProductsPage from "./pages/ProductsPage/ProductsPage";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useMutation,
-} from "@tanstack/react-query";
+import ErrorPage from "./pages/Error/ErrorPage";
+import HomePage from "./pages/Home/HomePage";
+import POSPage from "./pages/POS/POSPage";
+import ProductsPage from "./pages/Products/ProductsPage";
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 

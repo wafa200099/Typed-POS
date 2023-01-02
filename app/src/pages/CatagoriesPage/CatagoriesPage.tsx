@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
   ChangeEvent,
   FC,
@@ -25,7 +26,7 @@ import AddCategoryForm from "./components/AddCategoryForm";
 const CatagoriesPage: FC = () => {
   const [categories, setCategories] = useState<categoriesProps[]>([]);
   const [editCatagorieId, setEditCatagorieId] = useState<number | null>(null);
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState("");
   const [filteredCategories, setFilteredCategories] = useState<
     categoriesProps[]
   >([]);
@@ -43,24 +44,35 @@ const CatagoriesPage: FC = () => {
     pauseOnHover: true,
   };
 
-  const fetchCategories = async () => {
-    await setCategories(await getCategoryApi());
-  };
+  const { data, isLoading, isError, error } = useQuery(
+    ["category"],
+    getCategoryApi
+  );
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const catagories:categoriesProps[]=data
+  // const sleep = (ms: number) => {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // };
 
-  const deleteCategory = async (categoryId: number) => {
-    const newCatagories = [...categories];
-    const delelm = categories.findIndex(
-      (category) => category.id === categoryId
-    );
-    newCatagories.splice(delelm, 1);
-    await deleteCategoryApi(categoryId);
-    setCategories(newCatagories);
-    toast.error(`category Removed Successfully`, toastOptions);
-  };
+  // const fetchCategories = () => {
+  // return
+  // };
+
+  // useEffect(() => {
+  //   fetchCategories();
+  // }, [data]);
+
+  // const deleteCategory = async (categoryId: number) => {
+  //   const newCatagories = [...categories];
+  //   const delelm = categories.findIndex(
+  //     (category) => category.id === categoryId
+  //   );
+  //   newCatagories.splice(delelm, 1);
+  //   deleteCategoryApi(categoryId);
+  //   setCategories(newCatagories);
+  //   toast.error(`category Removed Successfully`, toastOptions);
+  // };
+
   const handleEditClick = (e: MouseEvent, category: categoriesProps) => {
     e.preventDefault();
     setEditCatagorieId(category.id);
@@ -69,6 +81,7 @@ const CatagoriesPage: FC = () => {
     };
     setEditFormData(formValues);
   };
+
   const handleEditFormChange = (event: ChangeEvent) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute(
@@ -80,9 +93,11 @@ const CatagoriesPage: FC = () => {
     newFormData[fieldName] = fieldValue;
     setEditFormData(newFormData);
   };
+
   const handleCancelClick = () => {
     setEditCatagorieId(null);
   };
+
   const handleEditFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const editedcategory = {
@@ -95,9 +110,9 @@ const CatagoriesPage: FC = () => {
       (category) => category.id === editCatagorieId
     );
     newCatagories[index] = editedcategory;
-    await editCatagorieApi(editCatagorieId!, editedcategory);
+    editCatagorieApi(editCatagorieId!, editedcategory);
     setCategories(newCatagories);
-    fetchCategories();
+    // fetchCategories();
     setEditCatagorieId(null);
   };
 
@@ -153,54 +168,56 @@ const CatagoriesPage: FC = () => {
           setIsAddCategoryFormOpen(false);
         }}
         onAdd={() => {
-          fetchCategories();
-          // setIsAddCategoryFormOpen(false)
+          // fetchCategories();
         }}
       />
 
-      <form onSubmit={handleEditFormSubmit}>
-        <table className="table table-responsive table-sm border w-50 shadow bg-light">
-          <thead>
-            <tr>
-              <th scope="col" className="p-3 bg-secondary text-white">
-                Name
-              </th>
-              <th scope="col" className="p-3 bg-secondary text-white">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentCategories.map((category, key) => (
-              <>
-                {editCatagorieId === category.id ? (
-                  <EditableRowCategory
-                    key={key}
-                    editFormData={editFormData}
-                    handleEditFormChange={handleEditFormChange}
-                    handleCancelClick={handleCancelClick}
-                  />
-                ) : (
-                  <ReadOnlyRowCategory
-                    category={category}
-                    key={key}
-                    deleteCategory={deleteCategory}
-                    handleEditClick={handleEditClick}
-                  />
-                )}
-              </>
-            ))}
-          </tbody>
-        </table>
-        <div className="container">
-          <Pagination
-            setCategoryPerPage={setCategoryPerPage}
-            categoryPerPage={categoryPerPage}
-            totalCategories={categories.length}
-            paginate={paginate}
-          />
-        </div>
-      </form>
+      {isLoading ? (
+        <div>looooooooooooding</div>
+      ) : (
+        <form onSubmit={handleEditFormSubmit}>
+          <table className="table table-responsive table-sm border w-50 shadow bg-light">
+            <thead>
+              <tr>
+                <th scope="col" className="p-3 bg-secondary text-white">
+                  Name
+                </th>
+                <th scope="col" className="p-3 bg-secondary text-white">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentCategories.map((category, key) => (
+                <>
+                  {editCatagorieId === category.id ? (
+                    <EditableRowCategory
+                      key={key}
+                      editFormData={editFormData}
+                      handleEditFormChange={handleEditFormChange}
+                      handleCancelClick={handleCancelClick}
+                    />
+                  ) : (
+                    <ReadOnlyRowCategory
+                      category={category}
+                      key={key}
+                      handleEditClick={handleEditClick}
+                    />
+                  )}
+                </>
+              ))}
+            </tbody>
+          </table>
+          <div className="container">
+            <Pagination
+              setCategoryPerPage={setCategoryPerPage}
+              categoryPerPage={categoryPerPage}
+              totalCategories={categories.length}
+              paginate={paginate}
+            />
+          </div>
+        </form>
+      )}
     </MainLayout>
   );
 };
