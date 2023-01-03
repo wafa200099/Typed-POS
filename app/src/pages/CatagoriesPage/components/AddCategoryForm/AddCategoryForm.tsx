@@ -22,7 +22,11 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({
   onClose,
   onAdd,
 }) => {
-  const { mutate } = useMutation(addCategoryApi);
+  const { mutate } = useMutation(addCategoryApi,{
+    onSuccess:()=>{
+      onAdd()
+    }
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -37,7 +41,6 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({
           onSuccess: () => {
             sleep(1000);
             toast.success(`${values.name} added successfully`, toastOptions);
-            onAdd()
             resetForm();
           },
           onError: (response) => {

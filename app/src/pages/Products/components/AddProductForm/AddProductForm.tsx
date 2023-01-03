@@ -21,7 +21,11 @@ const AddProductForm: FC<AddProductFormProps> = ({
   onAdd,
   categories,
 }) => {
-  const { mutate } = useMutation(addProductApi);
+  const { mutate } = useMutation(addProductApi,{
+    onSuccess:()=>{
+      onAdd()
+    }
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -127,31 +131,30 @@ const AddProductForm: FC<AddProductFormProps> = ({
               type="text"
             />
           </div>
-          <div className="mr-1">
-            <button
-              type="submit"
-              className=" btn btn-primary mt-3 m-2"
-              onClick={onAdd}
-            >
-              {formik.isSubmitting ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              ) : (
-                <span>submit</span>
-              )}
-            </button>
-            <button
-              className="btn btn-danger mt-3 m-2"
-              onClick={onClose}
-              disabled={formik.isSubmitting}
-            >
-              close
-            </button>
+          <div className="pr-1">
+          <button
+            type="submit"
+            className=" btn btn-primary mt-3 m-2"
+          >
+            {formik.isSubmitting ? (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : (
+              <span>submit</span>
+            )}
+          </button>
+          <button
+            className="btn btn-danger mt-3 m-2"
+            onClick={onClose}
+            disabled={formik.isSubmitting}
+          >
+            close
+          </button>
           </div>
         </Form>
       </FormikProvider>

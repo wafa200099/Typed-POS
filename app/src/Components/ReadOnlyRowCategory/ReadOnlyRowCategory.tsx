@@ -25,12 +25,15 @@ const ReadOnlyRowCategory: FC<Props> = ({ category, key, handleEditClick }) => {
   };
 
   // const mutationKey= "deletecategory";
-  const { mutate, isLoading } = useMutation(deleteCategoryApi);
+  const { mutate, isLoading } = useMutation(deleteCategoryApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["category"]);
+    },
+  });
 
   const deleteCategory = (categoryId: number) => {
     mutate(categoryId, {
       onSuccess: () => {
-        queryClient.invalidateQueries(["category"]);
         toast.error(`category Removed Successfully`, toastOptions);
       },
       onError: (response) => {
