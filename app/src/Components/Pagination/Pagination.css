@@ -35,3 +35,9 @@
   background-color: #eceeef;
   border-color: rgb(221, 221, 221);
 }
+
+.page-link:focus {
+  color: #ffffff;
+  background-color:#0B5ED7;
+}
+

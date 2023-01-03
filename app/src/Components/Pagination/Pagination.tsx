@@ -1,22 +1,22 @@
+import { FC } from "react";
 import "./Pagination.css";
 
-const Pagination = ({
-  productsPerPage,
-  totalProducts,
-  paginate,
-  categoryPerPage,
-  totalCategories,
-}: any) => {
+interface Props {
+  totalitems: number;
+  paginate: (pageNumber: number) => void;
+  itemPerPage: number;
+}
+
+const Pagination: FC<Props> = ({ totalitems, itemPerPage, paginate }) => {
+
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
-    pageNumbers.push(i);
-  }
-  for (let i = 1; i <= Math.ceil(totalCategories / categoryPerPage); i++) {
+  for (let i = 1; i <= Math.ceil( totalitems/ itemPerPage); i++) {
     pageNumbers.push(i);
   }
 
+
   return (
-    <nav>
+    <div>
       <ul className="pagination">
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">
@@ -26,7 +26,7 @@ const Pagination = ({
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
   );
 };
 

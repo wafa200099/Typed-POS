@@ -1,21 +1,16 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChangeEvent,
   FC,
   FormEvent,
   MouseEvent,
-  useEffect,
   useMemo,
-  useState,
+  useState
 } from "react";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  deleteCategoryApi,
-  editCatagorieApi,
-  getCategoryApi,
-} from "../../API/Category";
+import { editCatagorieApi, getCategoryApi } from "../../API/Category";
 import EditableRowCategory from "../../Components/EditableRowCategory/EditableRowCategory";
 import Pagination from "../../Components/Pagination/Pagination";
 import ReadOnlyRowCategory from "../../Components/ReadOnlyRowCategory/ReadOnlyRowCategory";
@@ -25,29 +20,27 @@ import SideNavBarLayout from "../../layouts/SideNavBarLayout/SideNavBarLayout";
 import AddCategoryForm from "./components/AddCategoryForm";
 
 const CatagoriesPage: FC = () => {
-  // const [categories, setCategories] = useState<categoriesProps[]>([]);
   const [editCatagorieId, setEditCatagorieId] = useState<number | null>(null);
   const [search, setSearch] = useState("");
-  const [filteredCategories, setFilteredCategories] = useState<
-    categoriesProps[]
-  >([]);
   const [isAddCategoryFormOpen, setIsAddCategoryFormOpen] = useState(false);
   const [editFormData, setEditFormData] = useState<editCategoryFormDataProps>({
     name: "",
   });
 
+  const toastOptions = {
+    autoClose: 400,
+    pauseOnHover: true,
+  };
   const queryClient = useQueryClient();
 
   const toggleAddCategoryForm = () => {
     setIsAddCategoryFormOpen(!isAddCategoryFormOpen);
   };
 
-  const { data, isLoading, isError, error } = useQuery(
-    ["category"],
-    getCategoryApi
-  );
-
+  const { data, isLoading } = useQuery(["category"], getCategoryApi);
   const catagories = data;
+
+  const { mutate } = useMutation(editCatagorieApi);
 
   const handleEditClick = (e: MouseEvent, category: categoriesProps) => {
     e.preventDefault();
@@ -81,7 +74,19 @@ const CatagoriesPage: FC = () => {
       name: editFormData.name,
     };
 
-    editCatagorieApi(editCatagorieId!, editedcategory);
+    mutate(
+      { editCatagorieId, editedcategory },
+      {
+        onSuccess: () => {
+          toast.success(`category updated Successfully`, toastOptions);
+        },
+        onError: (response) => {
+          toast.error("An error occured while updating category ");
+          console.log(response);
+        },
+      }
+    );
+
     queryClient.setQueriesData<categoriesProps[]>(["category"], (oldCat) => {
       return oldCat?.map((cat) => {
         if (cat.id === editCatagorieId) {
@@ -97,22 +102,21 @@ const CatagoriesPage: FC = () => {
   const categoryPerPage = 5;
   const indexOfLastCategory = currentPage * categoryPerPage;
   const indexOfFirstCategory = indexOfLastCategory - categoryPerPage;
-
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const cat = useMemo(
+  const filteredCategories = useMemo(
     () =>
       search
-        ? data?.filter((category) =>
+        ? catagories?.filter((category) =>
             category.name.toLowerCase().includes(search.toLowerCase())
           )
-        : data ?? [],
+        : catagories ?? [],
     [catagories, search]
   );
 
   const currentcategories = useMemo(
-    () => cat?.slice(indexOfFirstCategory, indexOfLastCategory),
-    [cat, indexOfFirstCategory, indexOfLastCategory]
+    () => filteredCategories?.slice(indexOfFirstCategory, indexOfLastCategory),
+    [filteredCategories, indexOfFirstCategory, indexOfLastCategory]
   );
 
   return (
@@ -186,8 +190,8 @@ const CatagoriesPage: FC = () => {
           </table>
           <div className="container">
             <Pagination
-              categoryPerPage={categoryPerPage}
-              totalCategories={catagories?.length}
+              itemPerPage={categoryPerPage}
+              totalitems={catagories!.length}
               paginate={paginate}
             />
           </div>

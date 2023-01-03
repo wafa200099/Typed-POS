@@ -233,9 +233,9 @@ const ProductsPage = () => {
           </table>
           <div className="container">
             <Pagination
-              setProductsPerPage={setProductsPerPage}
-              productsPerPage={productsPerPage}
-              totalProducts={products.length}
+
+              itemPerPage={productsPerPage}
+              totalitems={products.length}
               paginate={paginate}
             />
           </div>
